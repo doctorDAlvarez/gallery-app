@@ -1,9 +1,22 @@
 import React from 'react';
+import NotFound from './NotFound';
 
-export function Photo(props) {
+function Photo(props) {
     return (
-        <li>
-            <img src={props} alt="" />
-        </li>
-    )
+        <div class="photo-container">
+            <h2>Results</h2>
+                <ul>
+                { props.images.map( image => {
+                    return (
+                        <li>
+                            <img src="" alt="" />
+                        </li>
+                    )
+                    })}
+                </ul>
+            <NotFound />
+        </div>
+    );
 }
+
+export default Photo;
