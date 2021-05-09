@@ -1,15 +1,23 @@
 import React from 'react';
 import './index.css';
-import Photo from './Photo';
 import Nav from './Nav';
 import apiKey from './config';
+import SearchForm from './SearchForm';
+import PhotoContainer from './PhotoContainer';
 
-function App() {
+console.log(apiKey);
+
+// fetch("")
+//   .then()
+//   .catch()
+
+
+  function App() {
   return (
     <div className='container'>
-      {/* FORM */}
+      <SearchForm />
       <Nav />
-      <Photo />
+      <PhotoContainer />
     </div>
   );
 }
