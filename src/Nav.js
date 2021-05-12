@@ -1,21 +1,16 @@
 import React from 'react';
-import {
-    BrowserRouter as Router,
-    Link
-  } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-function Nav(props) {
-    return (      
-            <Router>
-                <nav className="main-nav">
-                    <ul>
-                        <li><Link to='/dogs'>Cats</Link></li>
-                        <li><Link to='/cats'>Dogs</Link></li>
-                        <li><Link to='/computers'>Computers</Link></li>
-                    </ul>
-                </nav>
-            </Router>
+export default function Nav() {
+    return (              
+      <nav className="main-nav">
+         <ul>
+           <li><NavLink to="/planes">Planes</NavLink></li>
+           <li><NavLink to="/cars">Cars</NavLink></li>
+           <li><NavLink to="/boats">Boats</NavLink></li>
+        </ul>
+     </nav>
+     
     );
 }
 
-export default Nav;
