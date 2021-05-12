@@ -1,9 +1,9 @@
-import { useEffect, useState, useRef} from 'react';
+import { useEffect, useState} from 'react';
 import './index.css';
-import Nav from './Nav';
+import Nav from './Components/Nav';
 import apiKey from './config';
-import SearchForm from './SearchForm';
-import Gallery from './Gallery';
+import SearchForm from './Components/SearchForm';
+import Gallery from './Components/Gallery';
 import {
   BrowserRouter,
   Route,
@@ -13,36 +13,47 @@ import {
 
 export default function App(props) {
   const [data, setData] = useState();
-  const [query, setQuery] = useState('planes');
+  const [query, setQuery] = useState();
+  const [planes, setPlanes] = useState([]);
+  const [cars, setCars] = useState([]);
+  const [boats, setBoats] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const dataTagsRef = useRef({});
- 
-  useEffect(() => {
-    const tags = ["planes", "cars", "boats"];
-    console.log('Effect 1');
-    tags.forEach(
-      tag => {
-        fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=%22${tag}%22&per_page=24&format=json&nojsoncallback=1`)
-        .then(res => res.json())
-        .then(res => dataTagsRef.current[tag] = res.photos.photo)
-        .catch( err => console.log("Error fetching data", err))
-      }
-    );
-  },[]);
 
+  //Collecting data from defaults tags.
+
+  useEffect(() => {
+    fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=%22"planes"%22&per_page=24&format=json&nojsoncallback=1`)
+      .then(res => res.json())
+      .then(res => setPlanes(res.photos.photo))
+      .catch( err => console.log("Error fetching data", err))
+  }, []);
+  
+  useEffect(() => {
+    fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=%22"cars"%22&per_page=24&format=json&nojsoncallback=1`)
+      .then(res => res.json())
+      .then(res => setCars(res.photos.photo))
+      .catch( err => console.log("Error fetching data", err))
+  }, []);
+
+  useEffect(() => {
+    fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=%22"boats"%22&per_page=24&format=json&nojsoncallback=1`)
+      .then(res => res.json())
+      .then(res => setBoats(res.photos.photo))
+      .catch( err => console.log("Error fetching data", err))
+  }, []);
+  
   useEffect(() => {
       setIsLoading(true);
       fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=%22${query}%22&per_page=24&format=json&nojsoncallback=1`)
       .then(res => res.json())
       .then(res => setData(res.photos.photo))
+      .then(res => setIsLoading(false))
       .catch( err => console.log("Error fetching data", err))
-      .then(setIsLoading(false))
   }, [query]);
 
   function handleSearch(query) {
       setQuery(query);  
   }
-  console.log(dataTagsRef.current.planes, isLoading)
 
   return (
     <BrowserRouter>
@@ -50,21 +61,19 @@ export default function App(props) {
         <SearchForm handleSearch={handleSearch} />
         <Nav />
         <Switch>
-          <Route key="planes" exact path="/planes">
-            <Gallery data={dataTagsRef.current.planes} title="planes" />
+          <Route path="/planes">
+            <Gallery data={planes} title="planes" />
           </Route>
-          <Route key="cars" exact path="/cars">
-            <Gallery data={dataTagsRef.current.cars} title="cars"/>
+          <Route path="/cars">
+            <Gallery data={cars} title="cars"/>
           </Route>
-          <Route key="boats" exact path="/boats">
-            <Gallery data={dataTagsRef.current.boats} title="boats"/>
+          <Route path="/boats">
+            <Gallery data={boats} title="boats"/>
           </Route>
-          <Route key="queryString" path="/search/:query">   
-            <Gallery data={data} handleSearch={handleSearch} query={query} />
-          </Route>
-          <Route key="root" exact path="/">
-            <Gallery data={dataTagsRef.current.planes} title="planes" />
-          </Route>    
+          <Route path="/search/:query">
+            { isLoading ? <h3>LOADING IMAGES....please wait</h3> :
+              <Gallery data={data} handleSearch={handleSearch} query={query} /> }    
+          </Route>        
         </Switch>
       </div>
     </BrowserRouter>        

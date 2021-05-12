@@ -16,7 +16,6 @@ export default function SearchForm( props ) {
         history.push(`/search/${query}`)
         e.currentTarget.reset();
     }
-
     return (
         <form onSubmit={handleSubmit} className="search-form">
             <input onChange={handleQuery} type="search" name="search" placeholder="Search..." required/>
