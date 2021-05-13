@@ -8,6 +8,7 @@ h2 {
   font-size: 2em;
   margin: 52px 0 40px;
   text-transform: capitalize;
+  color:#275270;
 }
 
 ul {
@@ -64,12 +65,23 @@ input {
   background-color: #275270;
 }
 
+.photo-container {
+  background-color: aliceblue;
+  padding: 20px;
+
+}
+
+.photo-container h2 {
+  margin: 20px;
+  margin-top: 10px;
+}
 .photo-container ul {
   display: flex;
   flex-flow: row wrap;
   justify-content: space-between;
   -ms-align-items: flex-start;
   align-items: flex-start;
+
 }
 
 .photo-container ul li {
@@ -77,6 +89,8 @@ input {
   height: 165px;
   overflow: hidden;
   margin-bottom: 15px;
+  box-shadow: 0 0 3px 3px lightblue;
+
 }
 
 .photo-container ul img {

@@ -40,6 +40,7 @@ export default function App(props) {
       .catch( err => console.log("Error fetching data", err))
   }, []);
   
+  //searching function
   function handleSearch(queryString) {
     setIsLoading(true);
     setQuery(queryString);

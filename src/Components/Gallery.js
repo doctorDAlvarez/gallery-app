@@ -17,7 +17,7 @@ export default function Gallery({handleSearch, data, title, query, loading}) {  
       
       <div className="photo-container">
       
-        <h2> Your query: <span>{ queryString || title }</span> </h2>
+        <h2> Images of: <span>{ queryString || title }</span> </h2>
       
         <ul>
         { 
