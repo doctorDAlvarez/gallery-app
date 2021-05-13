@@ -18,7 +18,7 @@ export default function App(props) {
   const [planes, setPlanes] = useState([]);
   const [cars, setCars] = useState([]);
   const [boats, setBoats] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState();
 
   //Collecting data from defaults tags.
 
@@ -26,45 +26,31 @@ export default function App(props) {
     setIsLoading(true);
     fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=%22"planes"%22&per_page=24&format=json&nojsoncallback=1`)
       .then(res => res.json())
-      .then(res => setPlanes(res.photos.photo))
-      .then(res => setIsLoading(false))
+      .then(res => { setPlanes(res.photos.photo); setIsLoading(false)})
       .catch( err => console.log("Error fetching data", err))
-      
-  }, []);
-  
-  useEffect(() => {
-    setIsLoading(true);
+
     fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=%22"cars"%22&per_page=24&format=json&nojsoncallback=1`)
       .then(res => res.json())
-      .then(res => setCars(res.photos.photo))
-      .then(res => setIsLoading(false))
+      .then(res => { setCars(res.photos.photo); setIsLoading(false)})
       .catch( err => console.log("Error fetching data", err))
-      
-  }, []);
 
-  useEffect(() => {
-    setIsLoading(true);
     fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=%22"boats"%22&per_page=24&format=json&nojsoncallback=1`)
       .then(res => res.json())
-      .then(res => setBoats(res.photos.photo))
-      .then(res => setIsLoading(false))
+      .then(res => { setBoats(res.photos.photo); setIsLoading(false)})
       .catch( err => console.log("Error fetching data", err))
-      
   }, []);
   
   function handleSearch(queryString) {
     setIsLoading(true);
     setQuery(queryString);
     fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${apiKey}&tags=%22${queryString}%22&per_page=24&format=json&nojsoncallback=1`)
-    .then(res => res.json())
-    .then(res => setData(res.photos.photo))
-    .then(res => setIsLoading(false))
-    .catch( err => console.log("Error fetching data", err))
+      .then(res => res.json())
+      .then(res => {setData(res.photos.photo); setIsLoading(false)})
+      .catch( err => console.log("Error fetching data", err))
     
   }
   
   //routing code
-console.log(data, query, isLoading)
   return (
     <BrowserRouter>
       <div className='container'>
@@ -72,31 +58,28 @@ console.log(data, query, isLoading)
         <SearchForm handleSearch={handleSearch} />
         
         <Nav />
+        {
+        
+        isLoading ? 
+        
+        <h2>Loading...</h2> :
         
         <Switch>
           
           <Route key="planes" path="/planes">
-            {(!isLoading && planes.length > 0) ?
-              <Gallery data={planes} title="planes" /> :
-              <h2>Loading.....</h2> }
+              <Gallery data={planes} title="planes" loading={isLoading}/>
           </Route>
 
           <Route key="cars" path="/cars">
-            {(!isLoading && cars.length > 0) ? 
-              <Gallery data={cars} title="cars" /> :
-              <h2>Loading.....</h2> }
+              <Gallery data={cars} title="cars" loading={isLoading}/>
           </Route>
 
           <Route key="boats" path="/boats">
-            {(!isLoading && boats.length > 0) ? 
-              <Gallery data={boats} title="boats" /> :
-              <h2>Loading.....</h2> } 
+              <Gallery data={boats} title="boats" loading={isLoading} /> 
           </Route>
 
           <Route key="queryString" exact path="/search/:query">
-            {!isLoading ? 
-              <Gallery data={data} handleSearch={handleSearch} query={query} /> :
-              <h2>Loading.....</h2> }   
+              <Gallery data={data} handleSearch={handleSearch} query={query} loading={isLoading}/>
           </Route>  
 
           <Route key="root" exact path="/">
@@ -109,7 +92,9 @@ console.log(data, query, isLoading)
           </Route> 
 
         </Switch>
-      
+
+        }
+     
       </div>
     </BrowserRouter>        
     );
