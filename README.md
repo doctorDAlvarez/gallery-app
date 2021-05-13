@@ -1,4 +1,5 @@
-# Getting Started with Create React App
+## Gallery App.
+Project 7 of my techDegree in Treehouse. Gallery app using React, React Router, and HOOKS!!! Enjoy!
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
