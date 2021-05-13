@@ -1,5 +1,5 @@
 import { useEffect, useState} from 'react';
-import './index.css';
+import './css/index.css';
 import Nav from './Components/Nav';
 import apiKey from './config';
 import SearchForm from './Components/SearchForm';
