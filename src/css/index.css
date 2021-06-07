@@ -1,3 +1,7 @@
+html {
+  background-color: #3f4850;
+}
+
 body {
   text-align: center;
   font-family: 'Open Sans', sans-serif;
@@ -28,7 +32,7 @@ a {
 
 .search-form button {
   outline: none;
-  background-color: #438bbd;
+  background-color: rgb(97,218,251,0.6);
   border: none;
   padding: 0px 15px;
   border-radius: 0 0.35em 0.35em 0;
@@ -53,7 +57,7 @@ input {
 
 .main-nav a {
   display: block;
-  background: #438bbd;
+  background: rgb(97,218,251,0.6);
   border-radius: 3px;
   padding: 5px;
   color: #fff;
@@ -66,14 +70,17 @@ input {
 }
 
 .photo-container {
-  background-color: aliceblue;
+  background-color: #3f4850;
   padding: 20px;
+  color: antiquewhite;
 
 }
 
 .photo-container h2 {
   margin: 20px;
   margin-top: 10px;
+  color: antiquewhite;
+
 }
 .photo-container ul {
   display: flex;
@@ -81,7 +88,6 @@ input {
   justify-content: space-between;
   -ms-align-items: flex-start;
   align-items: flex-start;
-
 }
 
 .photo-container ul li {
@@ -89,14 +95,15 @@ input {
   height: 165px;
   overflow: hidden;
   margin-bottom: 15px;
-  box-shadow: 0 0 3px 3px lightblue;
-
+  padding: 2rem;
 }
 
 .photo-container ul img {
   width: 100%;
   transform: scale(1.25);
   transition: transform 1.25s;
+  border: 1px solid antiquewhite;
+
 }
 
 .photo-container li:hover img {
